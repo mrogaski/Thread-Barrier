@@ -1,11 +1,11 @@
 ###########################################################################
-# $Id: Barrier.pm,v 1.1 2002/11/17 00:32:10 wendigo Exp $
+# $Id: Barrier.pm,v 1.2 2002/11/17 00:39:49 wendigo Exp $
 ###########################################################################
 #
 # Barrier.pm
 #
-# RCS Revision: $Revision: 1.1 $
-# Date: $Date: 2002/11/17 00:32:10 $
+# RCS Revision: $Revision: 1.2 $
+# Date: $Date: 2002/11/17 00:39:49 $
 #
 # Copyright 2002 Mark Rogaski, mrogaski@cpan.org
 #
@@ -13,6 +13,9 @@
 # distribution for license information.
 #
 # $Log: Barrier.pm,v $
+# Revision 1.2  2002/11/17 00:39:49  wendigo
+# Added code to determine version number.
+#
 # Revision 1.1  2002/11/17 00:32:10  wendigo
 # Initial revision
 #
@@ -27,8 +30,7 @@ use warnings;
 use threads;
 use threads::shared;
 
-our $VERSION = '0.01';
-
+our $VERSION = sprintf "%d.%01d%02d", ('$Name:  $' =~ /(p?\d+)/g), '';
 
 sub new {
     my $class = shift;
