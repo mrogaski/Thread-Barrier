@@ -5,4 +5,4 @@ MANIFEST
 README
 t/init.t
 t/load.t
-t/proc.t
+t/wait.t
