@@ -1,0 +1,37 @@
+Thread::Barrier
+===============
+
+Thread barriers provide a mechanism for synchronization of multiple 
+threads.  All threads issuing a "wait" on the barrier will block until 
+the count of waiting threads meets some threshold value.  This mechanism
+proves quite useful in situations where processing progresses in stages
+and completion of the current stage by all threads is the entry criteria
+for the next stage.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+This module requires Perl 5.8.0.
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2002 Mark Rogaski, mrogaski@cpan.org
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the Artistic License, a copy of which can be found 
+with perl.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.  See the Artistic License for more 
+details.
+
+
