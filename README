@@ -3,7 +3,7 @@ Thread::Barrier
 
 Name               DSLIP  Description                             Info
 ---------------    -----  --------------------------------------- -----
-Thread::Barrier    adpOa  Thread barriers for Perl                MROGASKI
+Thread::Barrier    adpOp  Thread barriers for Perl                MROGASKI
 
 
 Thread barriers provide a mechanism for synchronization of multiple 
@@ -38,14 +38,13 @@ COPYRIGHT AND LICENCE
 Copyright (C) 2002 Mark Rogaski, mrogaski@cpan.org
 
 This program is free software; you can redistribute it and/or modify it
-under the terms of the Artistic License, a copy of which can be found 
-with perl.
+under the same terms as Perl itself.
 
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-or FITNESS FOR A PARTICULAR PURPOSE.  See the Artistic License for more 
-details.
+or FITNESS FOR A PARTICULAR PURPOSE.  See the README file distributed with 
+Perl for further details.
 
 --
-$Id: README,v 1.3 2002/11/17 01:02:03 wendigo Exp $
+$Id: README,v 1.4 2002/11/17 01:13:30 wendigo Exp $
 
