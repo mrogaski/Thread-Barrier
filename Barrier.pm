@@ -1,11 +1,11 @@
 ###########################################################################
-# $Id: Barrier.pm,v 1.2 2002/11/17 00:39:49 wendigo Exp $
+# $Id: Barrier.pm,v 1.3 2002/11/17 01:13:08 wendigo Exp $
 ###########################################################################
 #
 # Barrier.pm
 #
-# RCS Revision: $Revision: 1.2 $
-# Date: $Date: 2002/11/17 00:39:49 $
+# RCS Revision: $Revision: 1.3 $
+# Date: $Date: 2002/11/17 01:13:08 $
 #
 # Copyright 2002 Mark Rogaski, mrogaski@cpan.org
 #
@@ -13,6 +13,9 @@
 # distribution for license information.
 #
 # $Log: Barrier.pm,v $
+# Revision 1.3  2002/11/17 01:13:08  wendigo
+# Modified license information.
+#
 # Revision 1.2  2002/11/17 00:39:49  wendigo
 # Added code to determine version number.
 #
@@ -124,14 +127,13 @@ Mark Rogaski, E<lt>mrogaski@cpan.orgE<gt>
 
 Copyright 2002 by Mark Rogaski
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the Artistic License, a copy of which can be
-found with perl.
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-Artistic License for more details.
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE.  See the README file distributed with
+Perl for further details.
 
 =cut
 
