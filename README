@@ -13,6 +13,11 @@ proves quite useful in situations where processing progresses in stages
 and completion of the current stage by all threads is the entry criteria
 for the next stage.
 
+This module only functions on Perl versions 5.8.0 and later.  And then
+only when threads are enabled with -Dusethreads.  It is of no use with
+any version of Perl before 5.8.0 or without threads enabled.
+
+
 INSTALLATION
 
 To install this module type the following:
@@ -22,9 +27,11 @@ To install this module type the following:
    make test
    make install
 
+
 DEPENDENCIES
 
-This module requires Perl 5.8.0.
+This module requires threaded Perl 5.8.0.
+
 
 COPYRIGHT AND LICENCE
 
@@ -40,5 +47,5 @@ or FITNESS FOR A PARTICULAR PURPOSE.  See the Artistic License for more
 details.
 
 --
-$Id: README,v 1.2 2002/11/17 00:49:56 wendigo Exp $
+$Id: README,v 1.3 2002/11/17 01:02:03 wendigo Exp $
 
