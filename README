@@ -1,6 +1,11 @@
 Thread::Barrier
 ===============
 
+Name               DSLIP  Description                             Info
+---------------    -----  --------------------------------------- -----
+Thread::Barrier    adpOa  Thread barriers for Perl                MROGASKI
+
+
 Thread barriers provide a mechanism for synchronization of multiple 
 threads.  All threads issuing a "wait" on the barrier will block until 
 the count of waiting threads meets some threshold value.  This mechanism
@@ -34,4 +39,6 @@ WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
 or FITNESS FOR A PARTICULAR PURPOSE.  See the Artistic License for more 
 details.
 
+--
+$Id: README,v 1.2 2002/11/17 00:49:56 wendigo Exp $
 
