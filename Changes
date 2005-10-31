@@ -1,7 +1,13 @@
 Revision history for Perl extension Thread::Barrier.
 
+0.2.00  31 October 2005
+    - The wait() method now resets the state after unblocking the waiting
+      threads.
+    - Fixed the wait.t file to account for some strangeness in the return
+      value of threads::join().
+
 0.1.01  9 March 2003
-        - Modified Makefile.PL to break if ithreads not available.
+    - Modified Makefile.PL to break if ithreads not available.
 
 0.1.00  16 November 2002
 	- Initial release.

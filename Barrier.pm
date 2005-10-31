@@ -1,27 +1,16 @@
 ###########################################################################
-# $Id: Barrier.pm,v 1.3 2002/11/17 01:13:08 wendigo Exp $
+# $Id: Barrier.pm,v 1.4 2005/10/31 05:37:30 wendigo Exp $
 ###########################################################################
 #
 # Barrier.pm
 #
-# RCS Revision: $Revision: 1.3 $
-# Date: $Date: 2002/11/17 01:13:08 $
+# RCS Revision: $Revision: 1.4 $
+# Date: $Date: 2005/10/31 05:37:30 $
 #
-# Copyright 2002 Mark Rogaski, mrogaski@cpan.org
+# Copyright 2002, 2005 Mark Rogaski, mrogaski@cpan.org
 #
 # See the README file included with the
 # distribution for license information.
-#
-# $Log: Barrier.pm,v $
-# Revision 1.3  2002/11/17 01:13:08  wendigo
-# Modified license information.
-#
-# Revision 1.2  2002/11/17 00:39:49  wendigo
-# Added code to determine version number.
-#
-# Revision 1.1  2002/11/17 00:32:10  wendigo
-# Initial revision
-#
 #
 ###########################################################################
 
@@ -33,7 +22,7 @@ use warnings;
 use threads;
 use threads::shared;
 
-our $VERSION = sprintf "%d.%01d%02d", ('$Name:  $' =~ /(p?\d+)/g), '';
+our $VERSION = '0.200';
 
 sub new {
     my $class = shift;
@@ -56,11 +45,25 @@ sub wait {
     my $self = shift;
     lock $self;
     $self->[1]++;
+    my $id = threads->self->tid;
     if ($self->[0] > $self->[1]) {
-        cond_wait($self) while $self->[0] > $self->[1];
+        cond_wait($self) while ($self->[1] && $self->[0] > $self->[1]);
     } else {
+        $self->[1] = 0;
         cond_broadcast($self);
     }
+}
+
+sub expected {
+    my $self = shift;
+    lock $self;
+    return $self->[0];
+}
+
+sub waiting {
+    my $self = shift;
+    lock $self;
+    return $self->[1];
 }
 
 1;
