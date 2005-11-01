@@ -1,11 +1,11 @@
 ###########################################################################
-# $Id: Barrier.pm,v 1.6 2005/11/01 18:32:45 wendigo Exp $
+# $Id: Barrier.pm,v 1.7 2005/11/01 20:10:11 wendigo Exp $
 ###########################################################################
 #
 # Barrier.pm
 #
-# RCS Revision: $Revision: 1.6 $
-# Date: $Date: 2005/11/01 18:32:45 $
+# RCS Revision: $Revision: 1.7 $
+# Date: $Date: 2005/11/01 20:10:11 $
 #
 # Copyright 2002, 2005 Mark Rogaski, mrogaski@cpan.org
 #
@@ -24,7 +24,7 @@ use threads;
 use threads::shared;
 use Carp;
 
-our $VERSION = '0.200';
+our $VERSION = '0.201';
 
 #
 # new - creates a new Thread::Barrier object
