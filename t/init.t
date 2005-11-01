@@ -2,7 +2,7 @@ use threads;
 use threads::shared;
 use Thread::Barrier;
 
-use Test::More tests => 4;
+use Test::More tests => 6;
 
 my $flag : shared;
 
@@ -24,6 +24,7 @@ my($t, $b);
 
 $flag = 0;
 $b = Thread::Barrier->new(0);
+ok($b->threshold == 0);
 $t = threads->create(\&foo, $b, 0);
 ok($t->join == 0);
 
@@ -35,8 +36,9 @@ eval {
 ok($@);
 
 $flag = 0;
-$b = Thread::Barrier->new;
+$b = Thread::Barrier->new(3);
 $b->init(0);
+ok($b->threshold == 0);
 $t = threads->create(\&foo, $b, 0);
 ok($t->join == 0);
 

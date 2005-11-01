@@ -1,11 +1,11 @@
 ###########################################################################
-# $Id: Barrier.pm,v 1.5 2005/11/01 18:30:54 wendigo Exp $
+# $Id: Barrier.pm,v 1.6 2005/11/01 18:32:45 wendigo Exp $
 ###########################################################################
 #
 # Barrier.pm
 #
-# RCS Revision: $Revision: 1.5 $
-# Date: $Date: 2005/11/01 18:30:54 $
+# RCS Revision: $Revision: 1.6 $
+# Date: $Date: 2005/11/01 18:32:45 $
 #
 # Copyright 2002, 2005 Mark Rogaski, mrogaski@cpan.org
 #
@@ -218,7 +218,7 @@ suggestions please send me an email message.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2002, 2005 by Mark Rogaski.
+Copyright 2002-2003, 2005 by Mark Rogaski.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
