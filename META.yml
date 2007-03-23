@@ -1,14 +1,11 @@
 --- #YAML:1.0
 ###########################################################################
-# $Id: META.yml,v 1.1 2005/11/01 19:57:25 wendigo Exp $
+# $Id: META.yml,v 1.2 2007/03/23 14:09:13 wendigo Exp $
 ###########################################################################
 #
 # META.yml
 #
-# RCS Revision: $Revision: 1.1 $
-# Date: $Date: 2005/11/01 19:57:25 $
-#
-# Copyright (C) 2005 Mark Rogaski, mrogaski@cpan.org;
+# Copyright (C) 2005, 2007 Mark Rogaski, mrogaski@cpan.org;
 # all rights reserved.
 #
 # See the README file included with the
@@ -19,7 +16,7 @@
 ###########################################################################
 
 name:               Thread-Barrier
-version:            0.200
+version:            0.300
 version_from:       Barrier.pm
 distribution_type:  module
 installdirs:        site

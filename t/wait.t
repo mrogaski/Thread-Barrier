@@ -1,8 +1,23 @@
+###########################################################################
+# $Id: wait.t,v 1.4 2007/03/23 14:09:15 wendigo Exp $
+###########################################################################
+#
+# wait.t
+#
+# Copyright (C) 2002-2003, 2005, 2007 Mark Rogaski, mrogaski@cpan.org; 
+# all rights reserved.
+#
+# See the README file included with the
+# distribution for license information.
+#
+###########################################################################
+
+use strict;
 use threads;
 use threads::shared;
 use Thread::Barrier;
 
-use Test::More tests => 3;
+use Test::More tests => 12;
 
 our $k = 8;
 my  $flag   : shared = 0;
@@ -99,4 +114,22 @@ foreach my $t (threads->list) {
 is($ctr, 0, "iterative test");
 is($c->count, 0, "counter reset");
 
+{
+    my $br = Thread::Barrier->new();
+    for (1 .. $k) {
+        ok($br->wait, "wait on zero-threshhold barrier");
+    }
+}
+
+{
+    my $br = Thread::Barrier->new($k);
+
+    for (1 .. ($k * 4)) {
+        my $tid = threads->create(sub { return $br->wait; });
+    }
+
+    my(@rel) = grep {$_} map {$_->join} threads->list();
+
+    ok(@rel == 4, "wait serial return value");
+}
 

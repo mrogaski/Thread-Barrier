@@ -1,13 +1,13 @@
 ###########################################################################
-# $Id: Barrier.pm,v 1.7 2005/11/01 20:10:11 wendigo Exp $
+# $Id: Barrier.pm,v 1.8 2007/03/23 14:09:12 wendigo Exp $
 ###########################################################################
 #
 # Barrier.pm
 #
-# RCS Revision: $Revision: 1.7 $
-# Date: $Date: 2005/11/01 20:10:11 $
+# RCS Revision: $Revision: 1.8 $
+# Date: $Date: 2007/03/23 14:09:12 $
 #
-# Copyright 2002, 2005 Mark Rogaski, mrogaski@cpan.org
+# Copyright 2002-2003, 2005, 2007 Mark Rogaski, mrogaski@cpan.org
 #
 # See the README file included with the
 # distribution for license information.
@@ -22,9 +22,12 @@ use warnings;
 
 use threads;
 use threads::shared;
-use Carp;
 
-our $VERSION = '0.201';
+our $VERSION = '0.300';
+
+###########################################################################
+# Public Methods
+###########################################################################
 
 #
 # new - creates a new Thread::Barrier object
@@ -40,23 +43,26 @@ our $VERSION = '0.201';
 #
 sub new {
     my $class       = shift;
-    my $threshold   = shift || 0;
 
-    # quick check for a nonnegative integer
-    confess "invalid argument supplied" if $threshold =~ /[^0-9]/;
+    my $self = &share({});
+    bless $self, $class;
 
-    my %self : shared;
-    %self = (
-        threshold   => $threshold,
-        count       => 0
+    %$self = (
+        threshold   => 0, # threads required to release barrier
+        count       => 0, # number of threads blocking on barrier
+        generation  => 0, # incremented when barrier is released
     );
 
-    bless \%self, $class;
+    $self->_set_threshold(shift) if @_; # may die
+
+    return $self;
 }
 
 
 #
 # init - set the threshold value for the barrier
+#
+# *** DEPRECATED ***
 #
 # Arguments:
 #
@@ -68,28 +74,7 @@ sub new {
 #
 sub init {
     my($self, $threshold) = @_;
-
-    # make sure an argument was passed
-    confess "no argument supplied" unless defined $threshold;
-
-    # verify that the argument is a nonnegative integer
-    confess "invalid argument supplied" if $threshold =~ /[^0-9]/;
-
-    {
-        #
-        # This could be called with threads already blocking,
-        # so we'll make sure we do appropriate locking.
-        #
-        lock $self;     
-        $self->{threshold} = $threshold;
-
-        if ($self->{threshold} <= $self->{count}) {
-            # release the barrier if enough threads are blocking
-            $self->{count} = 0;
-            cond_broadcast($self);
-        }
-    }
-
+    $self->_set_threshold($threshold);
     return $threshold;
 }
 
@@ -101,18 +86,22 @@ sub init {
 #
 # none
 #
+# Returns true to one of threads released upon barrier reset, false to 
+# all others.
+#
 sub wait {
     my $self = shift;
     lock $self;
+
     $self->{count}++;
-    my $id = threads->self->tid;
-    if ($self->{threshold} > $self->{count}) {
-        cond_wait($self) while ($self->{count} && 
-                $self->{threshold} > $self->{count});
-    } else {
-        $self->{count} = 0;
-        cond_broadcast($self);
-    }
+
+    return 1 if $self->_try_release; # barrier reset and released
+
+    # otherwise block
+    my $gen = $self->{generation};
+    cond_wait($self) while $self->{generation} == $gen;
+
+    return;
 }
 
 
@@ -134,6 +123,71 @@ sub count {
     lock $self;
     return $self->{count};
 }
+
+
+###########################################################################
+# Private Methods
+###########################################################################
+
+#
+# _set_threshold - adjust the barrier's threshold, possibly releasing it
+#                  if enough threads are blocking.
+#
+# Arguments:
+#
+# threshold
+#   Specifies the required number of threads that 
+#   must block on the barrier before it is released.
+# 
+# Returns true if barrier is released, false otherwise.
+#
+sub _set_threshold {
+    my($self, $threshold) = @_;
+    my $err;
+
+    # validate threshold
+    for ($threshold) {
+        $err = "no argument supplied", last unless defined $_;
+        $err = "invalid argument supplied", last if /[^0-9]/;
+    }
+    if ($err) {
+        require Carp;
+        $Carp::CarpLevel = 1;
+        Carp::confess($err);
+    }
+
+    # apply new threshold, possibly releasing barrier
+    lock $self;
+    $self->{threshold} = $threshold;
+
+    # check for release condition
+    $self->_try_release;
+}
+
+
+#
+# _tr_release - release the barrier if a sufficient number of threads
+#               have reached the barrier.
+#
+# Arguments:
+#
+#   none
+# 
+# Returns true if barrier is released, false otherwise.
+#
+sub _try_release {
+    my $self = shift;
+    lock $self;
+
+    return undef if $self->{count} < $self->{threshold};
+
+    # reset barrier and release
+    $self->{generation}++;
+    $self->{count} = 0;
+    cond_broadcast($self);
+    return 1;
+}
+
 
 1;
 __END__
@@ -218,7 +272,8 @@ suggestions please send me an email message.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2002-2003, 2005 by Mark Rogaski.
+Copyright 2002-2003, 2005, 2007 by Mark Rogaski, mrogaski@cpan.org;
+all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
