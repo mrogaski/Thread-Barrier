@@ -1,5 +1,5 @@
 ###########################################################################
-# $Id: wait.t,v 1.4 2007/03/23 14:09:15 wendigo Exp $
+# $Id: wait.t,v 1.5 2007/03/25 08:21:11 wendigo Exp $
 ###########################################################################
 #
 # wait.t
@@ -117,7 +117,7 @@ is($c->count, 0, "counter reset");
 {
     my $br = Thread::Barrier->new();
     for (1 .. $k) {
-        ok($br->wait, "wait on zero-threshhold barrier");
+        ok($br->wait, "wait on zero-threshold barrier");
     }
 }
 
